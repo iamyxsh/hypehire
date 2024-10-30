@@ -4,6 +4,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from 'src/common';
 import { PriceData } from 'src/entities';
+import { TriggerData } from 'src/entities/TriggerData';
 import { MailersendService } from 'src/mailersend/mailersend.service';
 import { MoralisService } from 'src/moralis/moralis.service';
 import { isDifferenceGreaterThanThresholdBigInt } from 'src/utils';
@@ -15,6 +16,9 @@ export class CronjobsService {
     private readonly moralisService: MoralisService,
     @InjectRepository(PriceData)
     private readonly priceDataRepo: EntityRepository<PriceData>,
+
+    @InjectRepository(TriggerData)
+    private readonly triggerDataRepo: EntityRepository<TriggerData>,
     private readonly em: EntityManager,
 
     private readonly mailerSendService: MailersendService,
@@ -22,7 +26,7 @@ export class CronjobsService {
 
   private readonly logger = new Logger(CronjobsService.name);
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron(CronExpression.EVERY_10_HOURS)
   async savePrice() {
     this.logger.log('Starting to fetch price');
 
@@ -60,20 +64,20 @@ export class CronjobsService {
 
     if (isDifferenceSignificantEth) {
       console.log('Price Difference for ETH');
-      // this.mailerSendService.sendEmail(
-      //   SUPPORTED_TOKENS.ETH,
-      //   BigInt(ethLatestPrice.price),
-      //   ethPrice,
-      // );
+      this.mailerSendService.sendEmail(
+        SUPPORTED_TOKENS.ETH,
+        BigInt(ethLatestPrice.price),
+        ethPrice,
+      );
     }
 
     if (isDifferenceSignificantPol) {
       console.log('Price Difference for POL');
-      // this.mailerSendService.sendEmail(
-      //   SUPPORTED_TOKENS.POL,
-      //   BigInt(polLatestPrice.price),
-      //   polPrice,
-      // );
+      this.mailerSendService.sendEmail(
+        SUPPORTED_TOKENS.POL,
+        BigInt(polLatestPrice.price),
+        polPrice,
+      );
     }
 
     this.em.insert(PriceData, {

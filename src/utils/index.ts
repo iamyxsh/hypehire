@@ -1,4 +1,9 @@
-import { DIFFERENCE_PERCENTAGE, SUPPORTED_TOKENS } from 'src/common';
+import { ethers } from 'ethers';
+import {
+  DIFFERENCE_PERCENTAGE,
+  FEE_BASIS_POINT,
+  SUPPORTED_TOKENS,
+} from 'src/common';
 
 export function isDifferenceGreaterThanThresholdBigInt(
   num1: bigint,
@@ -19,4 +24,32 @@ export function returnTokenName(token: SUPPORTED_TOKENS): 'ETH' | 'POL' {
     case SUPPORTED_TOKENS.POL:
       return 'POL';
   }
+}
+
+export const returnLast24HrTimestamp = (): Date => {
+  return new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+};
+
+export function formatMoralisPairUrl(
+  baseUrl: string,
+  chain: string,
+  tokenIn: string,
+): string {
+  return `${baseUrl}/erc20/${tokenIn}/pairs?chain=${chain}`;
+}
+
+export function calculateAmountOut(
+  amountIn: bigint,
+  priceA: bigint,
+  priceB: bigint,
+): bigint {
+  return ethers.parseEther(
+    ((Number(priceA) / Number(priceB)) * Number(amountIn)).toString(),
+  );
+}
+
+export function calculateFee(amountIn: bigint): bigint {
+  const feePercentage = BigInt(FEE_BASIS_POINT);
+  const scale = 10000n;
+  return (amountIn * feePercentage) / scale;
 }

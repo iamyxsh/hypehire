@@ -13,7 +13,7 @@ export class TriggerData {
   email: string;
 
   @Property()
-  triggerPrice: string;
+  triggerPrice: bigint;
 
   @Enum({ items: () => SUPPORTED_TOKENS, nativeEnumName: 'token' })
   token: SUPPORTED_TOKENS;

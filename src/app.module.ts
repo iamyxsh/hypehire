@@ -9,6 +9,9 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { DbConfig } from './config/db.config';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { MailersendModule } from './mailersend/mailersend.module';
+import { PricesModule } from './prices/prices.module';
+import { AlertModule } from './alert/alert.module';
+import { SwapModule } from './swap/swap.module';
 
 @Module({
   imports: [
@@ -30,6 +33,9 @@ import { MailersendModule } from './mailersend/mailersend.module';
     CronjobsModule,
     MoralisModule,
     MailersendModule,
+    PricesModule,
+    AlertModule,
+    SwapModule,
   ],
   controllers: [AppController],
   providers: [AppService],
