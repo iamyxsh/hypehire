@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { HYPEHIRE_EMAIL, SUPPORTED_TOKENS } from '../common';
 import { ApiConfig } from '../config/api.config';
 import { returnTokenName } from '../utils';
@@ -7,6 +7,8 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 @Injectable()
 export class MailersendService {
+  private readonly logger = new Logger(MailersendService.name);
+
   transporter: Transporter<
     SMTPTransport.SentMessageInfo,
     SMTPTransport.Options
@@ -18,8 +20,8 @@ export class MailersendService {
       port: 465,
       secure: true,
       auth: {
-        user: configService.nodemailerEmail,
-        pass: configService.nodemailerPassword,
+        user: this.configService.nodemailerEmail,
+        pass: this.configService.nodemailerPassword,
       },
     });
   }
@@ -36,6 +38,6 @@ export class MailersendService {
       text: `latest price - ${latestPrice.toString()} earlier price - ${earlierPrice.toString()}`,
     });
 
-    console.log('Message sent: %s', info.messageId);
+    this.logger.log('Message sent: %s', info.messageId);
   }
 }

@@ -1,6 +1,6 @@
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { TriggerData } from '../entities/TriggerData';
 import { CreateTriggerPriceDto } from './dto/createPriceDto';
 import { v4 } from 'uuid';
@@ -8,6 +8,8 @@ import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../common';
 
 @Injectable()
 export class AlertService {
+  private readonly logger = new Logger(AlertService.name);
+
   constructor(
     @InjectRepository(TriggerData)
     private readonly triggerDataRepo: EntityRepository<TriggerData>,
@@ -20,6 +22,7 @@ export class AlertService {
     email,
     token,
   }: CreateTriggerPriceDto): Promise<string> {
+    this.logger.log('Creating Trigger Data');
     const trigger = this.triggerDataRepo.create({
       uuid: v4(),
       chain,
@@ -27,18 +30,19 @@ export class AlertService {
       token,
       triggerPrice: BigInt(price),
     });
-
+    this.logger.log('Saving Trigger Data in the DB');
     return this.em.insert(TriggerData, trigger);
   }
 
   async getAllPriceTriggerForEmail(email: string): Promise<TriggerData[]> {
+    this.logger.log('fetching trigger data by email');
     return this.triggerDataRepo.find({
       email,
     });
   }
 
   async getPriceTriggerById(id: string): Promise<TriggerData> {
-    console.log('id', id);
+    this.logger.log('fetching trigger data by id');
     return this.triggerDataRepo.findOne({
       uuid: id,
     });
