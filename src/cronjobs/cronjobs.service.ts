@@ -26,7 +26,7 @@ export class CronjobsService {
 
   private readonly logger = new Logger(CronjobsService.name);
 
-  @Cron(CronExpression.EVERY_10_HOURS)
+  @Cron(CronExpression.EVERY_5_MINUTES)
   async savePrice() {
     this.logger.log('Starting to fetch price');
 
