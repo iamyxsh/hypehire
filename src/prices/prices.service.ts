@@ -1,9 +1,9 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { SUPPORTED_TOKENS } from 'src/common';
-import { PriceData } from 'src/entities';
-import { returnLast24HrTimestamp } from 'src/utils';
+import { SUPPORTED_TOKENS } from '../common';
+import { PriceData } from '../entities';
+import { returnLast24HrTimestamp } from '../utils';
 
 @Injectable()
 export class PricesService {

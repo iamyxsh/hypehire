@@ -1,11 +1,10 @@
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { TriggerData } from 'src/entities/TriggerData';
+import { TriggerData } from '../entities/TriggerData';
 import { CreateTriggerPriceDto } from './dto/createPriceDto';
 import { v4 } from 'uuid';
-import { UUID } from 'crypto';
-import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from 'src/common';
+import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../common';
 
 @Injectable()
 export class AlertService {
@@ -38,8 +37,9 @@ export class AlertService {
     });
   }
 
-  async getPriceTriggerById(id: UUID): Promise<TriggerData[]> {
-    return this.triggerDataRepo.find({
+  async getPriceTriggerById(id: string): Promise<TriggerData> {
+    console.log('id', id);
+    return this.triggerDataRepo.findOne({
       uuid: id,
     });
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { EMAIL_SENDER, HYPEHIRE_EMAIL, SUPPORTED_TOKENS } from 'src/common';
-import { ApiConfig } from 'src/config/api.config';
-import { returnTokenName } from 'src/utils';
+import { HYPEHIRE_EMAIL, SUPPORTED_TOKENS } from '../common';
+import { ApiConfig } from '../config/api.config';
+import { returnTokenName } from '../utils';
 import { createTransport, Transporter } from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
