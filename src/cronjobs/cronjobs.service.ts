@@ -52,6 +52,8 @@ export class CronjobsService {
       ),
     ]);
 
+    this.logger.log('Calculating Differeces');
+
     const isDifferenceSignificantEth = isDifferenceGreaterThanThresholdBigInt(
       ethPrice,
       BigInt(ethLatestPrice.price),
@@ -63,7 +65,7 @@ export class CronjobsService {
     );
 
     if (isDifferenceSignificantEth) {
-      console.log('Price Difference for ETH');
+      this.logger.log('Price Difference for ETH');
       this.mailerSendService.sendEmail(
         SUPPORTED_TOKENS.ETH,
         BigInt(ethLatestPrice.price),
@@ -72,13 +74,15 @@ export class CronjobsService {
     }
 
     if (isDifferenceSignificantPol) {
-      console.log('Price Difference for POL');
+      this.logger.log('Price Difference for POL');
       this.mailerSendService.sendEmail(
         SUPPORTED_TOKENS.POL,
         BigInt(polLatestPrice.price),
         polPrice,
       );
     }
+
+    this.logger.log('Saving price data in the db');
 
     this.em.insert(PriceData, {
       price: ethPrice.toString(),

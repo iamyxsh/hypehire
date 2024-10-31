@@ -1,10 +1,11 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { SwapService } from './swap.service';
 import { BigIntTransformPipe } from '../common/pipes';
 import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('swap')
 export class SwapController {
+  private readonly logger = new Logger(SwapController.name);
   constructor(private readonly swapService: SwapService) {}
 
   @ApiQuery({
@@ -29,6 +30,13 @@ export class SwapController {
     @Query('tokenOut') tokenOut: string,
     @Query('chain') chainId: string,
   ) {
+    this.logger.log(
+      'Calculating amount out for -> ',
+      tokenIn,
+      amount,
+      tokenOut,
+      chainId,
+    );
     return this.swapService.getSwapRate(chainId, tokenIn, tokenOut, amount);
   }
 }
