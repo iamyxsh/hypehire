@@ -2,12 +2,12 @@ import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from 'src/common';
-import { PriceData } from 'src/entities';
-import { TriggerData } from 'src/entities/TriggerData';
-import { MailersendService } from 'src/mailersend/mailersend.service';
-import { MoralisService } from 'src/moralis/moralis.service';
-import { isDifferenceGreaterThanThresholdBigInt } from 'src/utils';
+import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../common';
+import { PriceData } from '../entities';
+import { TriggerData } from '../entities/TriggerData';
+import { MailersendService } from '../mailersend/mailersend.service';
+import { MoralisService } from '../moralis/moralis.service';
+import { isDifferenceGreaterThanThresholdBigInt } from '../utils';
 import { v4 } from 'uuid';
 
 @Injectable()

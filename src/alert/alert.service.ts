@@ -4,7 +4,6 @@ import { Injectable } from '@nestjs/common';
 import { TriggerData } from '../entities/TriggerData';
 import { CreateTriggerPriceDto } from './dto/createPriceDto';
 import { v4 } from 'uuid';
-import { UUID } from 'crypto';
 import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../common';
 
 @Injectable()
@@ -38,8 +37,9 @@ export class AlertService {
     });
   }
 
-  async getPriceTriggerById(id: UUID): Promise<TriggerData[]> {
-    return this.triggerDataRepo.find({
+  async getPriceTriggerById(id: string): Promise<TriggerData> {
+    console.log('id', id);
+    return this.triggerDataRepo.findOne({
       uuid: id,
     });
   }

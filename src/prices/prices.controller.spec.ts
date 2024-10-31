@@ -41,6 +41,6 @@ describe('PricesController', () => {
       { ...price, token },
     ]);
 
-    expect(controller.getPrices).toHaveBeenCalledWith(token);
+    expect(mockPricesService.getPrices).toHaveBeenCalledWith(token);
   });
 });

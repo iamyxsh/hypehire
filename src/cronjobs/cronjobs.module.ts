@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CronjobsService } from './cronjobs.service';
-import { ApiConfig } from 'src/config/api.config';
-import { PriceData } from 'src/entities';
+import { ApiConfig } from '../config/api.config';
+import { PriceData } from '../entities';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { MailersendModule } from 'src/mailersend/mailersend.module';
-import { MailersendService } from 'src/mailersend/mailersend.service';
-import { TriggerData } from 'src/entities/TriggerData';
+import { MailersendModule } from '../mailersend/mailersend.module';
+import { MailersendService } from '../mailersend/mailersend.service';
+import { TriggerData } from '../entities/TriggerData';
 
 @Module({
   imports: [

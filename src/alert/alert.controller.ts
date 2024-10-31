@@ -2,12 +2,13 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AlertService } from './alert.service';
 import { CreateTriggerPriceDto } from './dto/createPriceDto';
 import { TriggerData } from 'src/entities/TriggerData';
-import { UUID } from 'crypto';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('alert')
 export class AlertController {
   constructor(private readonly alertService: AlertService) {}
 
+  @ApiBody({ type: CreateTriggerPriceDto })
   @Post()
   async setPriceTrigger(
     @Body() createTriggerPriceDto: CreateTriggerPriceDto,
@@ -15,15 +16,17 @@ export class AlertController {
     return this.alertService.setPriceTrigger(createTriggerPriceDto);
   }
 
-  @Get(':email')
+  @ApiParam({ name: 'email', example: 'you@example.com' })
+  @Get('/email/:email')
   async getAllPriceTriggerForEmail(
     @Param('email') email: string,
   ): Promise<TriggerData[]> {
     return this.alertService.getAllPriceTriggerForEmail(email);
   }
 
-  @Get(':id')
-  async getPriceTriggerById(@Param('id') id: UUID): Promise<TriggerData[]> {
+  @ApiParam({ name: 'id', example: 'UUID of the trigger saved.' })
+  @Get('/id/:id')
+  async getPriceTriggerById(@Param('id') id: string): Promise<TriggerData> {
     return this.alertService.getPriceTriggerById(id);
   }
 }

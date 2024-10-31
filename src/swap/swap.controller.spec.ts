@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SwapController } from './swap.controller';
 import { SwapService } from './swap.service';
 import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../common';
+import { ethers } from 'ethers';
 
 describe('SwapController', () => {
   let controller: SwapController;
@@ -11,9 +12,9 @@ describe('SwapController', () => {
       amountIn: amount,
       tokenIn: tokenAddress,
       tokenOut,
-      amountOutBeforeFee: BigInt(1000),
-      amountOutAfterFee: BigInt(997),
-      totalFee: BigInt(3),
+      amountOutBeforeFee: ethers.parseEther('1000'),
+      amountOutAfterFee: ethers.parseEther('997'),
+      totalFee: ethers.parseEther('3'),
       chainId: chain,
     })),
   };
@@ -38,19 +39,27 @@ describe('SwapController', () => {
     expect(controller).toBeDefined();
 
     const tokenIn = SUPPORTED_TOKENS.ETH;
-    const amount = BigInt(1);
+    const amount = ethers.parseEther('1');
     const tokenOut = SUPPORTED_TOKENS.POL;
     const chainId = SUPPORTED_CHAIN_IDS.ETH_MAINNET;
 
     expect(
       await controller.getSwapRate(tokenIn, amount, tokenOut, chainId),
-    ).toBeDefined();
-
-    expect(controller.getSwapRate).toHaveBeenCalledWith(
-      chainId,
+    ).toEqual({
+      amountIn: amount,
       tokenIn,
       tokenOut,
+      amountOutBeforeFee: ethers.parseEther('1000'),
+      amountOutAfterFee: ethers.parseEther('997'),
+      totalFee: ethers.parseEther('3'),
+      chainId,
+    });
+
+    expect(mockSwapService.getSwapRate).toHaveBeenCalledWith(
+      tokenIn,
       amount,
+      tokenOut,
+      chainId,
     );
   });
 });
