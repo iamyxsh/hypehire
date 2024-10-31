@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ApiConfig } from 'src/config/api.config';
+import { ApiConfig } from '../config/api.config';
 import EvmApi from '@moralisweb3/evm-api';
 import Moralis from 'moralis';
 import {
@@ -7,9 +7,9 @@ import {
   MORALIS_BASE_URL,
   SUPPORTED_CHAIN_IDS,
   SUPPORTED_TOKENS,
-} from 'src/common';
+} from '../common';
 import { ethers } from 'ethers';
-import { formatMoralisPairUrl } from 'src/utils';
+import { formatMoralisPairUrl } from '../utils';
 
 @Injectable()
 export class MoralisService {

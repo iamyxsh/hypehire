@@ -1,5 +1,5 @@
 import { Entity, Property, PrimaryKey, Enum } from '@mikro-orm/core';
-import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from 'src/common';
+import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../common';
 
 @Entity()
 export class TriggerData {

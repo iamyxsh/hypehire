@@ -3,7 +3,7 @@ import {
   DIFFERENCE_PERCENTAGE,
   FEE_BASIS_POINT,
   SUPPORTED_TOKENS,
-} from 'src/common';
+} from '../common';
 
 export function isDifferenceGreaterThanThresholdBigInt(
   num1: bigint,

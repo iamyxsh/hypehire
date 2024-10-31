@@ -1,5 +1,5 @@
 import { IsEmail, IsNumber, IsPositive, IsEnum } from 'class-validator';
-import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from 'src/common';
+import { SUPPORTED_CHAIN_IDS, SUPPORTED_TOKENS } from '../../common';
 
 export class CreateTriggerPriceDto {
   @IsEnum(SUPPORTED_CHAIN_IDS)

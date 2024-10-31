@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { MoralisService } from 'src/moralis/moralis.service';
-import { calculateAmountOut, calculateFee } from 'src/utils';
+import { MoralisService } from '../moralis/moralis.service';
+import { calculateAmountOut, calculateFee } from '../utils';
 
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
@@ -31,6 +31,7 @@ export class SwapService {
       amountOutBeforeFee: amountOut,
       amountOutAfterFee: amountOut - fee,
       totalFee: fee,
+      chainId,
     };
   }
 }

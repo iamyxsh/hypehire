@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { SwapService } from './swap.service';
-import { BigIntTransformPipe } from 'src/common/pipes/BigInt.pipe';
+import { BigIntTransformPipe } from '../common/pipes';
 
 @Controller('swap')
 export class SwapController {

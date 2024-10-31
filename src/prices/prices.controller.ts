@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { PricesService } from './prices.service';
-import { SUPPORTED_TOKENS } from 'src/common';
-import { PriceData } from 'src/entities';
+import { SUPPORTED_TOKENS } from '../common';
+import { PriceData } from '../entities';
 
 @Controller('prices')
 export class PricesController {
